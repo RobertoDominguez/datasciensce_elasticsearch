@@ -161,9 +161,9 @@ class GetterController:
                 for att in attendances:
 
                     personES=ElasticSearchPDO().get_document(index_name=indexPerson, doc_id=str(numberDB)+'_'+str(att.person_id))
-                    branchES=ElasticSearchPDO().search(index_name=indexBranch, query={"match": {"name": att.branch}})
-                    groupES=ElasticSearchPDO().search(index_name=indexGroup, query={"match": {"name": att.group}})
-                    sectionES=ElasticSearchPDO().search(index_name=indexSection, query={"match": {"name": att.section}})
+                    branchES=ElasticSearchPDO().search(index_name=indexBranch, query={"match": {"name": str(att.branch)}})
+                    groupES=ElasticSearchPDO().search(index_name=indexGroup, query={"match": {"name": str(att.group)}})
+                    sectionES=ElasticSearchPDO().search(index_name=indexSection, query={"match": {"name": str(att.section)}})
 
                     documentAttendance=dict[str,any]({
                         #Attendance Data
