@@ -6,6 +6,9 @@ class DataResponse:
         self.message=message
         self.headers = headers  # encabezados de la respuesta (opcional)
 
+    def getStatus(self):
+        return self.status
+
     def setStatus(self,_status):
         self.status=_status
     
@@ -15,5 +18,8 @@ class DataResponse:
     def setData(self,_data):
         self.data=_data
     
+    def getMessage(self):
+        return self.message
+
     def setMessage(self,_message):
         self.message=_message

@@ -23,19 +23,21 @@ class PersonData:
             groups=[]
             sections=[]
 
-            for obj in json_data['data']:
-                branches.append(Branch( obj['id'], obj['codigo'], obj['nombre'],
-                                    obj['direccion'], obj['telefono'], obj['descripcion'],
-                                    obj['localidad'], obj['provincia'], obj['departamento'],
-                                    obj['created_at'], obj['updated_at']))
-            for obj in json_data['data']:
-                groups.append(Group(    obj['id'], obj['nombre'], obj['descripcion'],
-                                    obj['localidad'], obj['provincia'], obj['departamento'],
-                                    obj['created_at'], obj['updated_at']))
-            for obj in json_data['data']:
-                sections.append(Section(    obj['id'], obj['nombre'], obj['descripcion'],
-                                        obj['localidad'], obj['provincia'], obj['departamento'],
-                                        obj['created_at'], obj['updated_at']))
+            for branch in obj['sucursales']:
+                branches.append(Branch( branch['id'], branch['codigo'], branch['nombre'],
+                                        branch['direccion'], branch['telefono'], branch['descripcion'],
+                                        branch['localidad'], branch['provincia'], branch['departamento'],
+                                        branch['created_at'], branch['updated_at']))
+                
+            for group in obj['grupos']:
+                groups.append(Group(group['id'], group['nombre'], group['descripcion'],
+                                    group['localidad'], group['provincia'], group['departamento'],
+                                    group['created_at'], group['updated_at']))
+                
+            for section in obj['secciones']:
+                sections.append(Section(section['id'], section['nombre'], section['descripcion'],
+                                        section['localidad'], section['provincia'], section['departamento'],
+                                        section['created_at'], section['updated_at']))
 
             people.append(Person(  obj['id'], obj['codigo'], obj['numero_item'], 
                                     obj['nombres'], obj['apellidos'], obj['ci'], 
@@ -45,7 +47,8 @@ class PersonData:
                                     obj['haber_basico'], obj['talla_ropa'], obj['file_curriculum'], 
                                     obj['localidad'], obj['provincia'], obj['departamento'], 
                                     obj['numero_seguro'], obj['nacionalidad'], obj['estado'], 
-                                    obj['otros'], obj['created_at'], obj['updated_at']))
+                                    obj['otros'], obj['created_at'], obj['updated_at'],
+                                    branches=branches, groups=groups, sections=sections))
             
         return people
 

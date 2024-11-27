@@ -25,44 +25,44 @@ class RequestHTTP:
     def POST(self, endpoint, data=None, headers=None, callback=None):
         try:
             response = requests.post(f"{self.base_url}{endpoint}", json=data, headers=headers)
-            data_response = DataResponse(response.json(), "success", response.status_code, response.headers)
+            data_response = DataResponse(response.json(), False, response.status_code, response.headers)
             
-            if callback:
-                return callback(data_response)
+            if callback and response.status_code>=200 and response.status_code<300:
+                data_response.setData( callback( json.loads(response.text )) )
+                data_response.setStatus(True)
             return data_response
 
         except requests.RequestException as e:
-            error_response = DataResponse(str(e), "error", None)
-            if callback:
-                return callback(error_response)
+            error_response = DataResponse(None, False, 500, str(e), None)
+            print(str(e))
             return error_response
 
     def PUT(self, endpoint, data=None, headers=None, callback=None):
         try:
             response = requests.put(f"{self.base_url}{endpoint}", json=data, headers=headers)
-            data_response = DataResponse(response.json(), "success", response.status_code, response.headers)
+            data_response = DataResponse(response.json(), False, response.status_code, response.headers)
             
-            if callback:
-                return callback(data_response)
+            if callback and response.status_code>=200 and response.status_code<300:
+                data_response.setData( callback( json.loads(response.text )) )
+                data_response.setStatus(True)
             return data_response
 
         except requests.RequestException as e:
-            error_response = DataResponse(str(e), "error", None)
-            if callback:
-                return callback(error_response)
+            error_response = DataResponse(None, False, 500, str(e), None)
+            print(str(e))
             return error_response
 
     def DELETE(self, endpoint, headers=None, callback=None):
         try:
             response = requests.delete(f"{self.base_url}{endpoint}", headers=headers)
-            data_response = DataResponse(response.json(), "success", response.status_code, response.headers)
+            data_response = DataResponse(response.json(), False, response.status_code, response.headers)
             
-            if callback:
-                return callback(data_response)
+            if callback and response.status_code>=200 and response.status_code<300:
+                data_response.setData( callback( json.loads(response.text )) )
+                data_response.setStatus(True)
             return data_response
 
         except requests.RequestException as e:
-            error_response = DataResponse(str(e), "error", None)
-            if callback:
-                return callback(error_response)
+            error_response = DataResponse(None, False, 500, str(e), None)
+            print(str(e))
             return error_response
