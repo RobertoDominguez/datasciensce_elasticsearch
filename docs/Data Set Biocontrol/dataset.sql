@@ -1,0 +1,73 @@
+--use AnteloOrtizCDE --2129
+--use AsistenciaGTP --121846
+--use AsistenciaOT --228785
+--use AsistenciaQSuiza --27681
+--use AsistenciaSCZLV --331329
+--use AsistenciaTumpar --247977
+--use BerchattiNorte1 --19741
+--use CenetropAsistencia --200578
+--use CentroMedicoPailonAsistencia --1955
+--use ChiquitanoGroupAsistencia --1179
+--use CridaiAsistencia --579463
+--use DayperCalzadosAsistencia --3116
+--use dbCIBSC --73642
+--use dbCosmol --269160
+--use DBCridaiic --348997
+--use dbGamSanIgnacio --468171
+--use dbGoldenBrand --499227
+--use dbHogarNuevaEsperanza --36024
+--use dbJhonnyRoquet --26551
+--use dbMonteSinai --12328
+--use dbMutun --279651
+--use dbNostas --103456
+--use dbPreconsur --358843
+--use dbSakura --331991
+--use dbSanFernando --134309
+--use dbTia --485462
+--use dbUniversidadPedagogica --239278
+--use DR2SeguridadIntegralAsistencia --2490
+--use EcofarmaAsistencia --11597
+--use EurochronosAsistencia2024 --141221
+--use FactoryAsistencia --5600
+--use FarmaciaAliciaAsistencia --2440
+--use GenesisBrokerAsistencia --10818
+--use GrupoRoesAsistencia --342318
+--use INFOARCHSRLAsistencia --25773
+--use InstitutoMariaAuxiliadora --7865
+--use [JobsAsistencia] --18987
+--use [KaramelleAsistencia] --65033
+--use LasMadresAsistencia --68216
+--use [LineHouseAsistencia] --220792
+--use [LosParquesAsistencia] --213431
+--use [Mafer_Asistencia] --69954
+--use [MaudashoesAsistencia] --11248
+--use MiLoteAsistencia30 --48824
+--use [MiPiscinaAsistencia] --95117
+--use [MutunAsistencia] --187255
+--use [OkiAsistencia] --36940
+--use [PorongoGAM_Asistencia] --364575
+--use PreconsurAsistencia --220019
+--use [PreconsurAsistenciaTarija] --34109
+--use [PreconsurCBBAasistencia] --121889
+--use [PublicTS7] --246592
+--use [PushAsistencia] --377089
+--use [QuimizaAsistencia] --8576
+--use [SanIgnacioHMAsistencia] --245021
+--use [SevillaLasTerrazasAsistencia] --56634
+--use [SistemasCenterAsistencia2023] --197671
+--use [SolquifarAsistencia] --88445
+--use [TartinaMuelleAsistencia] --53210
+--use [TecnaBoliviaAsistencia] --7325
+--use [TerracoopAsistencia] --179420
+--use [TigreCAsistencia] --49901
+--use [ToyosatoAsistencia] --93575
+--use [UnagroAsistencia] --64714
+--use [VillaRealCVisitas] --11729
+--use [VRAmboroAsistencia30] --15148
+
+select count(*) from Fichada
+select top 100 * from Fichada order by created_at desc
+
+
+
+Comportamiento, puntualidad, horas extras, 
