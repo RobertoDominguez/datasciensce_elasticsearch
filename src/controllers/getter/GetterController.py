@@ -37,7 +37,7 @@ class GetterController:
         ElasticSearchPDO().create_index(index_name=indexSection)
 
         for numberDB in range(1,self.databases+1):
-        #=============================PERSON==========================================================================
+        # =============================PERSON==========================================================================
             totalPagesDR = PersonData().getTotalPagesFromAPI(numberDB)
             if (not totalPagesDR.status):
                 print("Error loading total Pages (Person)")
@@ -66,7 +66,7 @@ class GetterController:
                     })
                     print("(Person) Document created"+str(numberDB)+'_'+str(person.id))
                 
-        #=============================BRANCH==========================================================================
+        # =============================BRANCH==========================================================================
             totalPagesDR = BranchData().getTotalPagesFromAPI(numberDB)
             if (not totalPagesDR.status):
                 print("Error loading total Pages (Branch)")
@@ -90,7 +90,7 @@ class GetterController:
                     })
                     print("(Branch) Document created"+str(numberDB)+'_'+str(person.id))
 
-        #=============================GROUP==========================================================================
+        # =============================GROUP==========================================================================
             totalPagesDR = GroupData().getTotalPagesFromAPI(numberDB)
             if (not totalPagesDR.status):
                 print("Error loading total Pages (Group)")
@@ -114,7 +114,7 @@ class GetterController:
                     print("(Group) Document created"+str(numberDB)+'_'+str(group.id))
 
 
-        #=============================SECTION==========================================================================
+        # =============================SECTION==========================================================================
             totalPagesDR = SectionData().getTotalPagesFromAPI(numberDB)
             if (not totalPagesDR.status):
                 print("Error loading total Pages (Section)")
@@ -138,7 +138,7 @@ class GetterController:
                     print("(Section) Document created"+str(numberDB)+'_'+str(section.id))
 
 
-
+        #=============================Attendance==========================================================================
         # Migration Attendance Fact
         ElasticSearchPDO().create_index(index_name=indexAttendance)
 
@@ -149,7 +149,7 @@ class GetterController:
                 print("Error loading total Pages (Attendance)")
                 return
 
-            for pageAttendance in range(1,int(totalPagesDR.getData())+1):
+            for pageAttendance in range(800,int(totalPagesDR.getData())+1):
                 attendancesDataResponse = AttendanceData().getAttendanceFromAPI(database=numberDB,page=pageAttendance)
 
                 if (not attendancesDataResponse.status):
@@ -167,31 +167,32 @@ class GetterController:
 
                     documentAttendance=dict[str,any]({
                         #Attendance Data
-                        "entry": att.actual_entry, #only time
-                        "exit": att.actual_exit, #only time
-                        "worked_minutes": att.worked_minutes,
-                        "entry_difference": att.entry_difference,
-                        "exit_difference": att.exit_difference,
-                        "approved_minutes": att.approved_minutes,
-                        "unapproved_minutes": att.unapproved_minutes,
-                        "late_minutes": att.late_minutes,
-                        "abandon_minutes": att.abandon_minutes,
-                        "no_entry_stamp": att.no_entry_stamp,
-                        "no_exit_stamp": att.no_exit_stamp,
+                        "entry": att.actual_entry[11:16], #only time
+                        "exit": att.actual_exit[11:16], #only time
+                        "worked_minutes": int(att.worked_minutes) if att.worked_minutes is not None else 0,
+                        "entry_difference": int(att.entry_difference) if att.entry_difference is not None else 0,
+                        "exit_difference": int(att.exit_difference) if att.exit_difference is not None else 0,
+                        "approved_minutes": int(att.approved_minutes) if att.approved_minutes is not None else 0,
+                        "unapproved_minutes": int(att.unapproved_minutes) if att.unapproved_minutes is not None else 0,
+                        "late_minutes": int(att.late_minutes) if att.late_minutes is not None else 0,
+                        "absent_minutes": int(att.absent_minutes) if att.absent_minutes is not None else 0,
+                        "abandon_minutes": int(att.abandon_minutes) if att.abandon_minutes is not None else 0,
+                        "no_entry_stamp": int(att.no_entry_stamp) if att.no_entry_stamp is not None else 0,
+                        "no_exit_stamp": int(att.no_exit_stamp) if att.no_exit_stamp is not None else 0,
 
                         #Schedule Data
                         "scheduled_entry": att.scheduled_entry,
                         "scheduled_exit": att.scheduled_exit,
-                        "scheduled_minutes": att.scheduled_minutes,
+                        "scheduled_minutes": int(att.scheduled_minutes) if att.scheduled_minutes is not None else 0,
 
                         #Company Data
                         "company_name": self.nameDatabases[str(numberDB)],
 
                         #Time Data
                         "date": att.date[:10],
-                        "year": att.date[:4],
-                        "month": att.date[5:7],
-                        "day": att.date[8:10],
+                        "year": int(att.date[:4]),
+                        "month": int(att.date[5:7]),
+                        "day": int(att.date[8:10]),
                         "day_of_week": att.day,
                         "is_holiday": att.holiday,
                         "is_weekend": 0,
@@ -201,8 +202,7 @@ class GetterController:
 
                         #Person Data
                         "code": personES['code'],
-                        "first_name": personES['first_name'],
-                        "last_name": personES['last_name'],
+                        "full_name": personES['first_name']+personES['last_name'],
                         "ci": personES['ci'],
                         "position": personES['position'],
                         "gender": personES['gender'],
@@ -236,6 +236,10 @@ class GetterController:
                             "section_province": sectionES['hits']['hits'][0]['_source']['province'],
                             "section_departament": sectionES['hits']['hits'][0]['_source']['departament']
                         })
-
+                    
                     ElasticSearchPDO().create_document(index_name=indexAttendance, doc_id=str(numberDB)+'_'+str(att.id), document=documentAttendance)
-                    print("(Attendance) Document created"+str(numberDB)+'_'+str(att.id))
+                    print("(Attendance) Document created "+str(numberDB)+'_'+str(att.id)+" (%"+str( pageAttendance / int(totalPagesDR.getData())*100 )+")")
+        
+
+
+# ULTIMO ID 1_760313
