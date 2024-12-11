@@ -240,6 +240,3 @@ class GetterController:
                     ElasticSearchPDO().create_document(index_name=indexAttendance, doc_id=str(numberDB)+'_'+str(att.id), document=documentAttendance)
                     print("(Attendance) Document created "+str(numberDB)+'_'+str(att.id)+" (%"+str( pageAttendance / int(totalPagesDR.getData())*100 )+")")
         
-
-
-# ULTIMO ID 1_760313
